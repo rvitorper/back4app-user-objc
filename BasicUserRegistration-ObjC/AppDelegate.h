@@ -2,7 +2,7 @@
 //  AppDelegate.h
 //  BasicUserRegistration-ObjC
 //
-//  Created by Ayrton Alves on 07/10/16.
+//  Created by Ramon Vitor on 07/10/16.
 //  Copyright © 2016 Ayrton Alves. All rights reserved.
 //
 
