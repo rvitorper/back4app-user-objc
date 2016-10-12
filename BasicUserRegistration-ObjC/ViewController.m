@@ -10,6 +10,8 @@
 
 @interface ViewController ()
 
+-(void) alert:(NSString*) message title:(NSString*)title;
+
 @end
 
 @implementation ViewController
@@ -17,6 +19,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+}
+
+-(void)alert:(NSString*)message
+       title:(NSString*) title {
+    // Show some greeting message
+    // Creating a simple alert
+    UIAlertController * alert = [UIAlertController
+                                 alertControllerWithTitle:title
+                                 message:message
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    // Creating the actions of the alert
+    UIAlertAction* okButton = [UIAlertAction
+                               actionWithTitle:@"OK"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   //Handle your yes please button action here
+                               }];
+    
+    [alert addAction:okButton];
+    
+    // Showing the alert
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (IBAction)login:(id)sender {
@@ -27,48 +52,10 @@
     [PFUser logInWithUsernameInBackground:username password:password
                                     block:^(PFUser *user, NSError *error) {
         if (user) {
-            // Show some greeting message
-            // Creating a simple alert
-            UIAlertController * alert = [UIAlertController
-                                         alertControllerWithTitle:@"Login"
-                                         message:@"Welcome back!"
-                                         preferredStyle:UIAlertControllerStyleAlert];
-            
-            // Creating the actions of the alert
-            UIAlertAction* okButton = [UIAlertAction
-                                        actionWithTitle:@"OK"
-                                        style:UIAlertActionStyleDefault
-                                        handler:^(UIAlertAction * action) {
-                                            //Handle your yes please button action here
-                                        }];
-            
-            [alert addAction:okButton];
-            
-            // Showing the alert
-            [self presentViewController:alert animated:YES completion:nil];
-            
+            [self alert:@"Welcome back" title:@"Login"];
         } else {
-            // Showing the error that happened
             NSString* errorString = [error userInfo][@"error"];
-            
-            // Creating a simple alert
-            UIAlertController * alert = [UIAlertController
-                                         alertControllerWithTitle:@"Error"
-                                         message:errorString
-                                         preferredStyle:UIAlertControllerStyleAlert];
-            
-            // Creating the actions of the alert
-            UIAlertAction* okButton = [UIAlertAction
-                                       actionWithTitle:@"OK"
-                                       style:UIAlertActionStyleDefault
-                                       handler:^(UIAlertAction * action) {
-                                           //Handle your yes please button action here
-                                       }];
-            
-            [alert addAction:okButton];
-            
-            // Showing the alert
-            [self presentViewController:alert animated:YES completion:nil];
+            [self alert:errorString title:@"Error"];
         }
     }];
 }
@@ -85,45 +72,11 @@
     
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if(!error) {
-            // Creating a simple alert
-            UIAlertController * alert = [UIAlertController
-                                         alertControllerWithTitle:@"Register"
-                                         message:@"Registered succesfully"
-                                         preferredStyle:UIAlertControllerStyleAlert];
-            
-            // Creating the actions of the alert
-            UIAlertAction* okButton = [UIAlertAction
-                                        actionWithTitle:@"OK"
-                                        style:UIAlertActionStyleDefault
-                                        handler:^(UIAlertAction * action) {
-                                            //Handle your yes please button action here
-                                        }];
-            
-            [alert addAction:okButton];
-            
-            // Showing the alert
-            [self presentViewController:alert animated:YES completion:nil];
+            [self alert:@"Registered successfully!" title:@"Register"];
         }
         else {
             NSString* errorString = [error userInfo][@"error"];
-            // Creating a simple alert
-            UIAlertController * alert = [UIAlertController
-                                         alertControllerWithTitle:@"Error"
-                                         message:errorString
-                                         preferredStyle:UIAlertControllerStyleAlert];
-            
-            // Creating the actions of the alert
-            UIAlertAction* okButton = [UIAlertAction
-                                        actionWithTitle:@"OK"
-                                        style:UIAlertActionStyleDefault
-                                        handler:^(UIAlertAction * action) {
-                                            //Handle your yes please button action here
-                                        }];
-            
-            [alert addAction:okButton];
-            
-            // Showing the alert
-            [self presentViewController:alert animated:YES completion:nil];
+            [self alert:errorString title:@"Error"];
         }
     }];
 }
